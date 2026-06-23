@@ -1,0 +1,2 @@
+name,checkpoint,eval_split,evalnum,valid_action_count,action_l1
+A_5000_best_D,outputs/A_5000/checkpoint_best.pt,splitD,3000,22628,0.17027771061614605
