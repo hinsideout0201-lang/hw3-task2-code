@@ -19,11 +19,10 @@
 
 各文件作用如下：
 
-* `scripts/mainrun.py`：总控脚本，依次训练 A-only 和 ABC-joint 两组模型，并在训练结束后调用画图脚本；
-* `scripts/trainCalvin.py`：训练脚本，负责读取 CALVIN 数据、构造 ACTPolicy、训练模型、周期性评估并保存 checkpoint；
+* `scripts/mainrun.py`：依次训练 A-only 和 ABC-joint 两组模型，并在训练结束后画图；
+* `scripts/trainCalvin.py`：负责读取 CALVIN 数据、构造 ACTPolicy、训练模型、周期性评估并保存 checkpoint；
 * `scripts/evalCalvin.py`：独立评测脚本，加载训练好的 checkpoint，在 splitD 上计算 Action L1；
 * `scripts/plotActResults.py`：根据训练日志生成 loss 曲线、eval 曲线和指标汇总表；
-* `results_5000/`：保存本次实验的曲线图和评测结果。
 
 ## 2. 环境准备
 
@@ -44,16 +43,6 @@ conda activate lerobot
 data/calvin-lerobot/
 ```
 
-期望目录结构如下：
-
-```text
-data/calvin-lerobot/
-├── splitA/
-├── splitB/
-├── splitC/
-└── splitD/
-```
-
 
 ## 4. 训练方式
 
@@ -64,12 +53,7 @@ python scripts/mainrun.py
 ```
 
 
-`mainrun.py` 会依次执行两组训练：
-
-1. `A_5000`：仅使用 `splitA` 训练；
-2. `ABC_5000`：使用 `splitA + splitB + splitC` 联合训练。
-
-训练输出默认保存在：
+训练输出保存在：
 
 ```text
 outputs/A_5000/
@@ -79,7 +63,7 @@ outputs/ABC_5000/
 
 ## 5. 独立评测方式
 
-训练完成后，可以使用 `evalCalvin.py` 在未见环境 `splitD` 上重新评测模型。
+训练完成后，可以使用 `evalCalvin.py` 在 `splitD` 上重新评测模型。
 
 评测 A-only 最优模型：
 
@@ -105,7 +89,7 @@ python scripts/evalCalvin.py \
   --out-dir results_5000
 ```
 
-评测结果会保存为：
+评测结果保存在：
 
 ```text
 results_5000/A_5000_best_D_eval.csv
@@ -123,7 +107,7 @@ python scripts/plotActResults.py \
   --out-dir results_5000
 ```
 
-生成文件包括：
+画图结果保存在：
 
 ```text
 results_5000/train_loss_curve.png
